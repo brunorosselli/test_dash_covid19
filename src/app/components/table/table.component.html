@@ -1,0 +1,80 @@
+<!--Panel Component-->
+<app-panel  [titulo]="titulo" [descricao]="descricao" [sitegov]="sitegov" [data_dados]="data_dados"></app-panel>
+<!------------------->
+  
+<!----------Body----------->  
+<div class="p-grid p-fluid">
+        <div>
+            <!--Jumbotrom Component-->  
+            <div class="jumbotron jumbotrom_buscar border-top border-success">
+                <h4 class="display-4">Buscar Por Município</h4>
+                <p class="lead">Escolha uma opção e o coloque no campo valor chave.</p>
+                <p class="lead">Respeite os caracteres minusculos e maiusculos. (Exemplo: B/P Cidade: Adamantina)</p>
+                <p class="lead">Digite apenas os números e não coloque espaçamentos. (Exemplo B/P Código IBGE: 3500105)</p>
+                <!--Seach Component-->
+                <div class="check_busca">
+                    <p-checkbox class="p-1" [binary]="true" [(ngModel)]="check_code" label="Buscar por Código"></p-checkbox>
+                    <p-checkbox class="p-1" [binary]="true" [(ngModel)]="check_city" label="Buscar por Cidade"></p-checkbox>
+                </div>
+                <div class="p-col-12 p-md-4 input_div_button">
+                    <div class="p-inputgroup">
+                        <button type="button" (click)="search()" pButton pRipple label="Buscar"></button>
+                        <input class="input_button" type="text" [(ngModel)]="text" pInputText placeholder="Valor Chave">         
+                    </div>
+                </div>
+                <!------------------->
+                <!--Table Result Serch Componet -->
+                <table class="table  border-top border-success table-borderless buscar ">
+                    <thead class="buscar">
+                    <tr class="buscar">
+                        <th scope="col">{{t_codigo_ibge}}</th>
+                        <th scope="col">{{t_grande_regiao}}</th>
+                        <th scope="col">{{t_municipios}}</th>
+                        <th scope="col">{{t_total_casos}}</th>
+                        <th scope="col">{{t_total_obitos}}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="buscar">
+                    <tr class="buscar">
+                        <td>{{codigo_ibge}}</td>
+                        <td>{{grande_regiao}}</td>
+                        <td>{{municipios}}</td>
+                        <td>{{total_casos}}</td>
+                        <td>{{total_obitos}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!------------------------------>
+              </div>
+            </div>
+<!---------------------------------->         
+
+<!--Table City Component-->
+   <div class="border-top border-success">        
+    <p-table #dt [globalFilterFields]="['Municipio', 'datas.municipios']" [value]="datas" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20,50,100]">
+        <ng-template  pTemplate="header">
+            <tr>
+                <th>Código IBGE</th>
+                <th>Grande Região</th>
+                <th>Municipio</th>
+                <th>Total de Casos</th>
+                <th>Total de Óbitos</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data>
+            <tr [ngClass]="{'row-accessories': data.mun_total_obitos === 'Accessories'}">
+                <td>{{data.code_ibge}}</td>
+                <td>{{data.grande_regiao}}</td>
+                <td>{{data.municipios}}</td>
+                <td>{{data.mun_total_casos}}</td>
+                <td>
+                    <div [ngClass]="{'fewcases': data.mun_total_obitos === 0, 'averagecases': (data.mun_total_obitos > 0 && data.mun_total_obitos < 10),'manycases': data.mun_total_obitos > 10}">
+                        {{data.mun_total_obitos}}
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+<!---------------------------->

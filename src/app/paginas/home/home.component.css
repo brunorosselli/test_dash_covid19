@@ -1,0 +1,9 @@
+div{
+    background-color: #1f2d40;
+}
+
+@media screen and (max-width: 800px) {
+    div{
+        font-size: 100px;
+     }
+}
